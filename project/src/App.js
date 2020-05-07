@@ -8,9 +8,10 @@ import { Button } from 'rsuite';
 function App() {
   return (
     <div className="App">
-      <Button appearance="primary"> Hello world </Button>
+      <Button appearance="primary"> Hello world </Button> 
+      <p>My Token = {window.token}</p>
     </div>
   );
 }
 
-export default App;
+export default App; 

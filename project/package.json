@@ -1,7 +1,8 @@
 {
   "name": "project",
   "version": "0.1.0",
-  "private": true,
+  "private": true, 
+  "homepage": "/static/react",
   "dependencies": {
     "@babel/core": "7.9.0",
     "@svgr/webpack": "4.3.3",
