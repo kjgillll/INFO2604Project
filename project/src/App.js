@@ -7,10 +7,18 @@ import { Button } from 'rsuite';
 
 function App() {
   return (
-    <div className="App">
-      <Button appearance="primary"> Hello world </Button> 
-      <p>My Token = {window.token}</p>
-    </div>
+    const instance = (
+        <div className="show-container"></div> 
+            <Container>
+            <Header>Header</Header>
+            <Container>
+                <Sidebar>Sidebar</Sidebar>
+                <Content>Content</Content>
+            </Container>
+            <Footer>Footer</Footer>
+            </Container> 
+            );
+    ReactDOM.render(instance);
   );
 }
 
