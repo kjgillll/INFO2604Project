@@ -1,6 +1,8 @@
 import 'rsuite/dist/styles/rsuite-default.css';
 //import { Button } from 'rsuite';  
-import { Container, Header, Content, Footer, Sidebar } from 'rsuite'; 
+import { Container, Header, Content, Footer, Sidebar, Navbar, Nav, Sidenav, Icon, Dropdown } from 'rsuite';   
+import React, {Component} from 'react'; 
+//import { Button, Navbar, Nav, Sidenav, Icon, Dropdown, } from 'react-bootstrap'
 
 const headerStyles = {
   padding: 18,
@@ -47,7 +49,7 @@ const NavToggle = ({ expand, onChange }) => {
   );
 };
 
-class Page extends React.Component {
+class Side extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -133,4 +135,6 @@ class Page extends React.Component {
   }
 }
 
-ReactDOM.render(<Page />);
+//ReactDOM.render(<Page />); 
+
+export default Side;
