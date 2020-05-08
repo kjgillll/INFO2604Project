@@ -3,22 +3,25 @@ import React from 'react';
 import './App.css';
 
 import 'rsuite/dist/styles/rsuite-default.css';
-import { Button } from 'rsuite'; 
+//import { Button } from 'rsuite';  
+import { Container, Header, Content, Footer, Sidebar } from 'rsuite';
 
 function App() {
   return (
-    const instance = (
-        <div className="show-container"></div> 
+    <div className="App">
+        const instance = (
+            <div className="show-container"></div> 
             <Container>
-            <Header>Header</Header>
-            <Container>
-                <Sidebar>Sidebar</Sidebar>
-                <Content>Content</Content>
-            </Container>
-            <Footer>Footer</Footer>
+                <Header>Header</Header>
+                <Container>
+                    <Sidebar>Sidebar</Sidebar>
+                    <Content>Content</Content>
+                </Container>
+                <Footer>Footer</Footer>
             </Container> 
-            );
-    ReactDOM.render(instance);
+        );
+        ReactDOM.render(instance);
+    </div>
   );
 }
 
