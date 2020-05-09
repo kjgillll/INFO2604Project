@@ -4,6 +4,11 @@ import { Container, Header, Content, Footer, Sidebar, Navbar, Nav, Sidenav, Icon
 import React, {Component} from 'react'; 
 //import { Button, Navbar, Nav, Sidenav, Icon, Dropdown, } from 'react-bootstrap'
 
+import {Link, Router} from 'react-router-dom';  
+import Dairy from './Dairy'; 
+import ReactDOM from 'react-dom'
+
+
 const headerStyles = {
   padding: 18,
   fontSize: 16,
@@ -47,20 +52,25 @@ const NavToggle = ({ expand, onChange }) => {
       </Navbar.Body>
     </Navbar>
   );
-};
+}; 
 
-class Side extends Component {
+class Side extends Component { 
+
   constructor(props) {
     super(props);
     this.state = {
       expand: true
     };
-    this.handleToggle = this.handleToggle.bind(this);
+    this.handleToggle = this.handleToggle.bind(this); 
+    this.loadDairy = this.loadDairy.bind(this);
   }
   handleToggle() {
     this.setState({
       expand: !this.state.expand
     });
+  } 
+  loadDairy() {
+    ReactDOM.render(<Dairy />, document.getElementById('root')); 
   }
   render() {
     const { expand } = this.state;
@@ -97,15 +107,14 @@ class Side extends Component {
                     title="Items"
                     icon={<Icon icon="magic" />}
                     placement="rightStart"
-                  >
-                    <Dropdown.Item eventKey="3-1">Meat</Dropdown.Item>
+                  > 
+                    <Dropdown.Item eventKey="3-1" onclick={this.loadDairy}>Meat</Dropdown.Item>
                     <Dropdown.Item eventKey="3-2">Dairy</Dropdown.Item>
                     <Dropdown.Item eventKey="3-3">Beverages</Dropdown.Item>
                     <Dropdown.Item eventKey="3-4">Personal Care</Dropdown.Item>
-                    <Dropdown.Item eventKey="3-5">Other</Dropdown.Item>
+                    <Dropdown.Item eventKey="3-5">Other</Dropdown.Item> 
                   </Dropdown>
-                  
-     
+                
                 </Nav>
               </Sidenav.Body>
             </Sidenav>
@@ -121,7 +130,8 @@ class Side extends Component {
         </Container>
       </div>
     );
-  }
+  } 
+  
 }
 
 //ReactDOM.render(<Page />); 

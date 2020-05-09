@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 //import logo from './logo.svg';
 import './App.css'; 
-import Side from './components/SideLayout';
+import Side from './components/SideLayout'; 
+import Dairy from './components/Dairy';
 
 import 'rsuite/dist/styles/rsuite-default.css';
 //import { Button } from 'rsuite';  
