@@ -37,15 +37,15 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#">Home</a></li>
         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Products <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li><a href="#">Beverages</a></li>
-          <li><a href="#">Frozen Foods</a></li>
-          <li><a href="#">Bread and Bakery</a></li> 
-          <li><a href="#">Veggies and Fruits</a></li>
-          <li><a href="#">Personal Care</a></li> 
-          <li><a href="#">Other</a></li>
+          <li><a href="{{url_for ('beverages') }}">Beverages</a></li>
+          <li><a href="{{url_for ('frozen') }}">Frozen Foods</a></li>
+          <li><a href="{{url_for ('bakery') }}">Bread and Bakery</a></li> 
+          <li class="active"><a href="{{url_for ('veggies') }}">Veggies and Fruits</a></li>
+          <li><a href="{{url_for ('personal') }}">Personal Care</a></li> 
+          <li><a href="{{url_for ('other') }}">Other</a></li>
         </ul>
         <li><a href="#">Deals</a></li>
         <li><a href="#">Stores</a></li>
@@ -63,54 +63,94 @@
   <div class="row">
     <div class="col-sm-4">
       <div class="panel panel-primary">
-        <div class="panel-heading">BLACK FRIDAY DEAL</div>
-        <div class="panel-body"><img src="potatoes.png" class="img-responsive" style="width:100%" alt="Image"></div>
-        <div class="panel-footer">Buy 50 mobiles and get a gift card</div>
+        <div class="panel-heading">
+            <button type="submit" class="btn btn-danger btn-lg btn-block">Add to Cart</button>
+        </div>
+        <div class="panel-body"><img src="static/images/pumpkins.png" class="img-responsive" style="width:100%" alt="Image"></div>
+        <div class="panel-footer" style="text-align: center">Pumpkins (1kg)</div>
       </div>
     </div>
-    <div class="col-sm-4"> 
-      <div class="panel panel-danger">
-        <div class="panel-heading">BLACK FRIDAY DEAL</div>
-        <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
-        <div class="panel-footer">Buy 50 mobiles and get a gift card</div>
+    <div class="col-sm-4">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+            <button type="submit" class="btn btn-danger btn-lg btn-block">Add to Cart</button>
+        </div>
+        <div class="panel-body"><img src="static/images/potatoes.png" class="img-responsive" style="width:100%" alt="Image"></div>
+        <div class="panel-footer" style="text-align: center">Potatoes (1kg)</div>
+      </div>
+    </div> 
+    <div class="col-sm-4">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+            <button type="submit" class="btn btn-danger btn-lg btn-block">Add to Cart</button>
+        </div>
+        <div class="panel-body"><img src="static/images/apple.jpg" class="img-responsive" style="width:100%" alt="Image"></div>
+        <div class="panel-footer" style="text-align: center">Apples (1kg)</div>
       </div>
     </div>
-    <div class="col-sm-4"> 
-      <div class="panel panel-success">
-        <div class="panel-heading">BLACK FRIDAY DEAL</div>
-        <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
-        <div class="panel-footer">Buy 50 mobiles and get a gift card</div>
-      </div>
-    </div>
-  </div>
 </div><br>
 
 <div class="container">    
   <div class="row">
     <div class="col-sm-4">
       <div class="panel panel-primary">
-        <div class="panel-heading">BLACK FRIDAY DEAL</div>
-        <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
-        <div class="panel-footer">Buy 50 mobiles and get a gift card</div>
+        <div class="panel-heading">
+            <button type="submit" class="btn btn-danger btn-lg btn-block">Add to Cart</button>
+        </div>
+        <div class="panel-body"><img src="static/images/garlic.png" class="img-responsive" style="width:100%" alt="Image"></div>
+        <div class="panel-footer" style="text-align: center">Garlic (1kg)</div>
       </div>
     </div>
-    <div class="col-sm-4"> 
+    <div class="col-sm-4">
       <div class="panel panel-primary">
-        <div class="panel-heading">BLACK FRIDAY DEAL</div>
-        <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
-        <div class="panel-footer">Buy 50 mobiles and get a gift card</div>
+        <div class="panel-heading">
+            <button type="submit" class="btn btn-danger btn-lg btn-block">Add to Cart</button>
+        </div>
+        <div class="panel-body"><img src="static/images/celery.png" class="img-responsive" style="width:100%" alt="Image"></div>
+        <div class="panel-footer" style="text-align: center">Celery (1kg)</div>
       </div>
-    </div>
-    <div class="col-sm-4"> 
+    </div> 
+    <div class="col-sm-4">
       <div class="panel panel-primary">
-        <div class="panel-heading">BLACK FRIDAY DEAL</div>
-        <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
-        <div class="panel-footer">Buy 50 mobiles and get a gift card</div>
+        <div class="panel-heading">
+            <button type="submit" class="btn btn-danger btn-lg btn-block">Add to Cart</button>
+        </div>
+        <div class="panel-body"><img src="static/images/cabbages.png" class="img-responsive" style="width:100%" alt="Image"></div>
+        <div class="panel-footer" style="text-align: center">Cabbage (1kg)</div>
       </div>
     </div>
-  </div>
 </div><br><br>
 
+<div class="container">    
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+            <button type="submit" class="btn btn-danger btn-lg btn-block">Add to Cart</button>
+        </div>
+        <div class="panel-body"><img src="static/images/garlic.png" class="img-responsive" style="width:100%" alt="Image"></div>
+        <div class="panel-footer" style="text-align: center">Garlic (1kg)</div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+            <button type="submit" class="btn btn-danger btn-lg btn-block">Add to Cart</button>
+        </div>
+        <div class="panel-body"><img src="static/images/celery.png" class="img-responsive" style="width:100%" alt="Image"></div>
+        <div class="panel-footer" style="text-align: center">Celery (1kg)</div>
+      </div>
+    </div> 
+    <div class="col-sm-4">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+            <button type="submit" class="btn btn-danger btn-lg btn-block">Add to Cart</button>
+        </div>
+        <div class="panel-body"><img src="static/images/cabbages.png" class="img-responsive" style="width:100%" alt="Image"></div>
+        <div class="panel-footer" style="text-align: center">Cabbage (1kg)</div>
+      </div>
+    </div>
+</div><br><br>
 <footer class="container-fluid text-center">
   <p>Online Store Copyright</p>  
   <form class="form-inline">Get deals:
