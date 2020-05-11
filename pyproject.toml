@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "poetry-demo"
+version = "0.1.0"
+description = ""
+authors = ["kjgillll <keronn.gill@my.uwi.edu>"]
+
+[tool.poetry.dependencies]
+flask = "==1.0.2"
+python = "^3.7"
+Flask-SQLAlchemy = "^2.4"
+Flask-JWT = "^0.3.2"
+
+
+[tool.poetry.dev-dependencies]
+pytest = "^4.6"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
