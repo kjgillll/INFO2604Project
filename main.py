@@ -34,5 +34,13 @@ def frozen():
 def beverages(): 
     return render_template("/beverages.html")
 
+@app.route("/login")
+def login():
+    return render_template("login.html")
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,0 +1,43 @@
+.main-section{
+    margin:  0 auto;
+    margin-top: 120px;
+    padding: 0;
+}
+
+.modal-content{
+    opacity: 0.7;
+    padding: 15px 0;
+    border-radius: 20px;
+}
+    
+.btn-primary:hover{
+    background-color: #187e8a;
+}
+       
+.btn-secondary:hover{
+    background-color: #8a1845;
+}
+
+a{
+    color: #187e8a;
+}
+
+a:hover{
+    background-color: #8a5d18;
+    color: #cb2365;
+}
+
+.footer{
+    height: 50px;
+    padding: 30px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+body{
+    background-image: url(../images/background.jpg);
+    max-width: 100%;
+    height: auto;
+}
