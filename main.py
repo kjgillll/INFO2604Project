@@ -6,7 +6,8 @@ from datetime import timedelta
 from werkzeug.security import generate_password_hash, check_password_hash 
 import uuid  
 import jwt 
-import datetime
+import datetime 
+from functools import wraps
 
 from models import db, User
 
@@ -25,13 +26,36 @@ app.app_context().push()
 db.create_all(app=app) 
 ''' End Boilerplate Code '''
 
+def token_required(f): 
+    @wraps(f) 
+    def decorated(*args, **kwargs): 
+        token = None 
 
-@app.route("/", methods=['GET'])
+        if 'x-access-token' in request.headers: 
+            token = request.headers['x-access-token']  
+
+        if not token: 
+            return jsonify({'message': 'Token is missing!'}), 401 
+
+        try: 
+            data = jwt.decode(token, app.config['SECRET_KEY']) 
+            current_user = User.query.filter_by(email=data['email']).first() 
+        except: 
+            return jsonify({'message':'Token is invalid'}),401  
+        
+        return f(current_user, *args, **kwargs) 
+
+    return decorated
+
+
+
+@app.route("/", methods=['GET']) 
 def index():
     return render_template("login.html")   
 
-@app.route("/user",methods=['GET']) 
-def get_users(): 
+@app.route("/user",methods=['GET'])  
+@token_required
+def get_users(current_user): 
     users = User.query.all() 
     output = [] 
 
@@ -44,8 +68,9 @@ def get_users():
 
     return jsonify({'users': output}) 
 
-@app.route("/user/<username>", methods=['GET'])  
-def get_one_user(username): 
+@app.route("/user/<username>", methods=['GET']) 
+@token_required  
+def get_one_user(current_user,username): 
 
     user = User.query.filter_by(username=username).first() 
 
@@ -59,7 +84,7 @@ def get_one_user(username):
 
     return jsonify({'user':user_data}) 
 
-@app.route('/login') 
+@app.route('/login')   
 def login(): 
     auth = request.authorization 
 
@@ -79,25 +104,15 @@ def login():
     return make_response('Could not verify',401,{'WWW-Authenicate': 'Basic realm="Login required!"'})  
         
 
-@app.route("/user",methods=['POST']) 
-def create_user(): 
+@app.route("/user",methods=['POST'])   
+@token_required
+def create_user(current_user): 
     data = request.get_json() 
     
     hashed_password = generate_password_hash(data['password'], method='sha256') 
-<<<<<<< HEAD
     new_user = User(username=data['username'],email=data['email'], password = hashed_password) 
     db.session.add(new_user) 
     db.session.commit()  
-=======
-    new_user = User(id=str(uuid.uuid4()),name=data['name'],username=data['username'],email=data['email'], password = hashed_password) 
-    
-    try:
-        db.session.add(new_user)
-        db.session.commit() # save user
-    except IntegrityError: # attempted to insert a duplicate user
-        db.session.rollback()
-        return 'username or email already exists' # error message
->>>>>>> 581cdf18e43ab75bb01463fc4965a9024dcc1ceb
 
     return jsonify({'message': 'New user created!'})
 
