@@ -84,11 +84,26 @@ def create_user():
     data = request.get_json() 
     
     hashed_password = generate_password_hash(data['password'], method='sha256') 
+<<<<<<< HEAD
     new_user = User(username=data['username'],email=data['email'], password = hashed_password) 
     db.session.add(new_user) 
     db.session.commit()  
+=======
+    new_user = User(id=str(uuid.uuid4()),name=data['name'],username=data['username'],email=data['email'], password = hashed_password) 
+    
+    try:
+        db.session.add(new_user)
+        db.session.commit() # save user
+    except IntegrityError: # attempted to insert a duplicate user
+        db.session.rollback()
+        return 'username or email already exists' # error message
+>>>>>>> 581cdf18e43ab75bb01463fc4965a9024dcc1ceb
 
     return jsonify({'message': 'New user created!'})
+
+@app.route("/signup")
+def signup():
+    return render_template('signup.html')
 
 @app.route("/home")
 def home():
