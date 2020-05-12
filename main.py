@@ -1,4 +1,6 @@
 from flask import Flask, render_template, url_for
+from pip._vendor.urllib3 import request
+import json
 
 app = Flask(__name__)
 
@@ -41,6 +43,30 @@ def beverages():
 @app.route('/about')
 def about():
     return render_template('about.html')
+
+@app.route('/data', methods=['GET'])
+def getData():
+  token = request.args.get('token')
+  res = 'Hello token='+token if token else "Hello"
+  return res
+
+@app.route('/data', methods=['POST'])
+def addData():
+  data = request.json
+  res = 'Hello data='+json.dumps(data) if data else "Hello"
+  return res, 201
+
+@app.route('/data/:id', methods=['DELETE'])
+def removeData(id):
+  res = 'id '+id+' Deleted!'
+  return res, 204
+
+@app.route('/data/:id', methods=['UPDATE'])
+def updateData(id):
+  data = request.json
+  res = 'id '+id
+  res += ' Hello data='+json.dumps(data) if data else "Hello"
+  return res, 201
 
 if __name__ == "__main__":
     app.run(debug=True)
