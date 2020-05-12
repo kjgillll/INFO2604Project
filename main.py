@@ -1,12 +1,44 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request,jsonify
 from pip._vendor.urllib3 import request
-import json
+import json 
+from flask_jwt import JWT, jwt_required, current_identity
+from sqlalchemy.exc import IntegrityError 
+from datetime import timedelta 
+from werkzeug.security import generate_password_hash, check_password_hash 
+import uuid
 
-app = Flask(__name__)
+from models import db, User
+
+''' Begin boilerplate code '''
+def create_app():
+  app = Flask(__name__)
+  app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+  app.config['SECRET_KEY'] = "MYSECRET"
+  app.config['JWT_EXPIRATION_DELTA'] = timedelta(days = 7) 
+  db.init_app(app)
+  return app
+
+app = create_app()
+
+app.app_context().push()
+db.create_all(app=app) 
+''' End Boilerplate Code '''
+
 
 @app.route("/", methods=['GET'])
 def index():
-    return render_template("login.html") 
+    return render_template("login.html")  
+
+@app.route("/user",methods=['POST']) 
+def create_user(): 
+    data = request.get_json() 
+    
+    hashed_password = generate_password_hash(data['password'], method='sha256') 
+    new_user = User(id=str(uuid.uuid4()),name=data['name'],username=data['username'],email=data['email'], password = hashed_password) 
+    db.session.add(new_user) 
+    db.session.commit()  
+
+    return jsonify({'message': 'New user created!'})
 
 @app.route("/signup")
 def signup():
