@@ -1,16 +1,19 @@
+{% import "bootstrap/wtf.html" as wtf %}
+
 <!-- Default form register -->
-<form class="text-center border border-light p-5" action="#!">
+<form class="text-center border border-light p-5" action="{{url_for ('signup') }}" method="POST">
 
     <p class="h4 mb-4">Sign up</p>
+    {{form.hidden_tag()}}
 
     <!-- Username -->
-    <input type="text" id="defaultRegisterFormUsername" class="form-control mb-4" placeholder="Username" required>
+    {{wtf.form_field(form.username)}}
 
     <!-- E-mail -->
-    <input type="email" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="E-mail" required>
+    {{wtf.form_field(form.email)}}
 
     <!-- Password -->
-    <input type="password" id="defaultRegisterFormPassword" class="form-control" placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock" required>
+    {{wtf.form_field(form.password)}}
 
     <!-- Sign up button -->
     <button class="btn btn-info my-4 btn-block" type="submit">Sign up</button>
