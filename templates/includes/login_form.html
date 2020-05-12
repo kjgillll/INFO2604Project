@@ -1,0 +1,30 @@
+<!-- Default form login -->
+<form class="text-center border border-light p-5" action="#!">
+
+    <p class="h4 mb-4">Sign in</p>
+
+    <!-- E-mail -->
+    <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail" required>
+
+    <!-- Password -->
+    <input type="password" id="defaultLoginFormPassword" class="form-control" placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock" required>
+
+    <div class="d-flex justify-content-around">
+        <div>
+          <!-- Forgot password -->
+          <a href="">Forgot password?</a>
+        </div>
+    </div>
+
+    <!-- Sign up button -->
+    <button class="btn btn-info my-4 btn-block" type="submit">Sign in</button>
+
+    <hr>
+
+    <!-- Terms of service -->
+    <p>Not a member?
+        <a href="{{url_for ('signup') }}">Register</a>
+    </p>
+
+</form>
+<!-- Default form register -->
