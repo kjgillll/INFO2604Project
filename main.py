@@ -1,5 +1,4 @@
-from flask import Flask, render_template, url_for, request,jsonify
-from pip._vendor.urllib3 import request
+from flask import Flask, render_template, url_for, request, jsonify
 import json 
 from flask_jwt import JWT, jwt_required, current_identity
 from sqlalchemy.exc import IntegrityError 
@@ -27,14 +26,28 @@ db.create_all(app=app)
 
 @app.route("/", methods=['GET'])
 def index():
-    return render_template("login.html")  
+    return render_template("login.html")   
+
+app.route("/user",methods=['GET']) 
+def get_all_users(): 
+    users = User.query.all() 
+    output = [] 
+
+    for user in users: 
+        user_data = {} 
+        user_data['username'] = user.name 
+        user_data['password'] = user.password 
+        user_data['email'] = user.email 
+        output.append(user_data) 
+        
+    return jsonify({'users': output})
 
 @app.route("/user",methods=['POST']) 
 def create_user(): 
     data = request.get_json() 
     
     hashed_password = generate_password_hash(data['password'], method='sha256') 
-    new_user = User(id=str(uuid.uuid4()),name=data['name'],username=data['username'],email=data['email'], password = hashed_password) 
+    new_user = User(username=data['username'],email=data['email'], password = hashed_password) 
     db.session.add(new_user) 
     db.session.commit()  
 
