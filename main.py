@@ -1,10 +1,12 @@
-from flask import Flask, render_template, url_for, request, jsonify
+from flask import Flask, render_template, url_for, request, jsonify, make_response
 import json 
 from flask_jwt import JWT, jwt_required, current_identity
 from sqlalchemy.exc import IntegrityError 
-from datetime import timedelta 
+from datetime import timedelta
 from werkzeug.security import generate_password_hash, check_password_hash 
-import uuid
+import uuid  
+import jwt 
+import datetime
 
 from models import db, User
 
@@ -28,19 +30,54 @@ db.create_all(app=app)
 def index():
     return render_template("login.html")   
 
-app.route("/user",methods=['GET']) 
-def get_all_users(): 
+@app.route("/user",methods=['GET']) 
+def get_users(): 
     users = User.query.all() 
     output = [] 
 
     for user in users: 
         user_data = {} 
-        user_data['username'] = user.name 
+        user_data['username'] = user.username 
         user_data['password'] = user.password 
         user_data['email'] = user.email 
         output.append(user_data) 
+
+    return jsonify({'users': output}) 
+
+@app.route("/user/<username>", methods=['GET'])  
+def get_one_user(username): 
+
+    user = User.query.filter_by(username=username).first() 
+
+    if not user: 
+        return jsonify({'message': 'No user found'}) 
+
+    user_data = {} 
+    user_data['username'] = user.username 
+    user_data['password'] = user.password 
+    user_data['email'] = user.email  
+
+    return jsonify({'user':user_data}) 
+
+@app.route('/login') 
+def login(): 
+    auth = request.authorization 
+
+    if not auth or not auth.username or not auth.password: 
+       return make_response('Could not verify',401,{'WWW-Authenicate': 'Basic realm="Login required!"'}) 
+
+    user = User.query.filter_by(username=auth.username).first()  
+
+    if not user:  
+         return make_response('Could not verify',401,{'WWW-Authenicate': 'Basic realm="Login required!"'})  
+
+    if check_password_hash(user.password,auth.password): 
+        token = jwt.encode({'email':user.email,'exp': datetime.datetime.utcnow()+datetime.timedelta(minutes=30)},app.config['SECRET_KEY'])
+
+        return jsonify({'token': token.decode('UTF-8')})
+
+    return make_response('Could not verify',401,{'WWW-Authenicate': 'Basic realm="Login required!"'})  
         
-    return jsonify({'users': output})
 
 @app.route("/user",methods=['POST']) 
 def create_user(): 
