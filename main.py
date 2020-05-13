@@ -7,8 +7,10 @@ from datetime import timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
 import uuid
 from flask_bootstrap import Bootstrap
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from os import environ, path
 
-from models import db, User
+from models import db, User, Recipe, Ingredient, Step
 from forms import LoginForm, SignupForm
 
 ''' Begin boilerplate code '''
@@ -24,12 +26,14 @@ def create_app():
 
 
 app = create_app()
-app.config['SECRET_KEY'] = 'mySecretKey8484'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 Bootstrap(app)
 
 app.app_context().push()
 db.create_all(app=app)
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
 ''' End Boilerplate Code '''
 
 
@@ -41,10 +45,23 @@ def index():
         user = User.query.filter_by(username=form.username.data).first()
 
         if user:
-            if user.password == form.password.data:
+            if check_password_hash(user.password, form.password.data):
+                login_user(user, remember=False)
                 return redirect(url_for('home'))
 
     return render_template("login.html", form=form)
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('/'))
 
 
 @app.route("/signup", methods=['GET', 'POST'])
@@ -76,9 +93,48 @@ def create_user(data):
     return True
 
 
+@app.route("/recipes")
+def home():
+    return render_template("/recipes.html")
+
+
+def setIngredients(recipe, param):
+    for data in param:
+        ingredient = Ingredient()
+        ingredient.name = data['name']
+        ingredient.quantity = data['quantity']
+        ingredient.type = data['type']
+        db.session.add(ingredient)
+        ingredient.recipe.append(recipe)
+
+
+def setRecipeSteps(recipe, param):
+    for step in param:
+        recipeStep = Step()
+        recipeStep.stepDetails = step
+        db.session.add(recipeStep)
+        recipeStep.recipe.append(recipe)
+
+
+def generateRecipeData():
+    with open('static/recipes.json') as file:
+        data = json.load(file)
+        for val in data:
+            recipe = Recipe()
+            recipe.recipe_name = val['name']
+            setIngredients(recipe, val['ingredients'])
+            setRecipeSteps(recipe, val['steps'])
+            recipe.imageURL = val['imageURL']
+            recipe.originalURL = val['originURL']
+    db.session.commit()
+
+generateRecipeData()
+
+'''
 @app.route("/home")
 def home():
     return render_template("/index.html")
+'''
 
 
 @app.route("/veggies")
